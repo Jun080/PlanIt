@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mon Itinéraire de Voyage - Explorez le Monde</title>
+        <link rel="stylesheet" href="assets/css/base.css" />
+        <link rel="stylesheet" href="assets/css/components.css" />
+        <link rel="stylesheet" href="assets/css/layout.css" />
+        <link rel="stylesheet" href="assets/css/travel.css" />
+        <link rel="stylesheet" href="assets/css/utils.css" />
+    </head>
+    <body class="homepage">
+        <header class="header">
+            <div class="container glass-effect">
+                <a href="index.html">
+                    <img src="./assets/images/logo.png" alt="Mon Itinéraire de Voyage" class="logo" />
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link active">Accueil</a>
+                    <a href="choisir.html" class="nav-link">Choisir un pays</a>
+                    <a href="itineraire.html" class="nav-link">Mon itinéraire</a>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h1 class="dark-green">Créez votre itinéraire de <span class="dark-gradient">voyage personnalisé</span></h1>
+                <p class="midnight-green h2 h2-alatsi">Découvrez le monde et planifiez votre prochaine aventure</p>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container-small">
+                <div class="parent">
+                    <div class="country">
+                        <h2 class="h2-alatsi snow">
+                            <span class="h1 vanilla">6</span> <br />
+                            pays différents
+                        </h2>
+                    </div>
+                    <div class="ticket">
+                        <img src="/assets/images/icon-ticket.svg" alt="" height="112" width="112" />
+                    </div>
+                    <div class="images"></div>
+                    <div class="glass glass-effect">
+                        <div class="container-text">
+                            <h2 class="dark-green h2-beckan">Des expériences inoubliables vous attendent</h2>
+                            <p class="midnight-green">
+                                Sélectionnez des lieux d'exception, créez un itinéraire unique et réservez vos coups de cœur&nbsp;!
+                            </p>
+                        </div>
+                        <div
+                            class="btn-container relative group inline-flex items-center w-max-w"
+                            x-data="{ hover: false }"
+                            x-on:mouseenter="hover = true"
+                            x-on:mouseleave="hover = false"
+                        >
+                            <svg width="0" height="0" color-interpolation-filters="sRGB">
+                                <defs>
+                                    <filter id="buttonFilter">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                        <feColorMatrix
+                                            in="blur"
+                                            mode="matrix"
+                                            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                            result="buttonFilter"
+                                        ></feColorMatrix>
+                                        <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                        <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                                    </filter>
+                                </defs>
+                            </svg>
+                            <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                                <p class="btn-text bg-dark-green">Découvrir des idées</p>
+                                <div class="btn-icon-container bg-dark-green transition-transform js-button-icon"></div>
+                            </a>
+                            <div class="btn-icon transition-transform js-button-arrow">
+                                <div class="transition-transform transform js-button-arrow-icon-primary">
+                                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                            stroke="#fffbfa"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="exemple-carousel container">
+            <div class="carousel-container container">
+                <div class="titre-arrows">
+                    <div class="container-titre">
+                        <h2 class="h2-35">Votre itinéraire <span class="dark-gradient">prêt à explorer</span></h2>
+                        <p class="midnight-green">
+                            Découvrez un <span>exemple de voyage</span> conçu pour vous inspirer. Ces destinations combinent <span>culture</span>,
+                            <span>nature</span> et <span>détente</span> pour créer un itinéraire équilibré. Vous pouvez ajouter ou retirer des villes
+                            pour personnaliser votre aventure et construire le voyage de vos rêves.
+                        </p>
+                    </div>
+                    <div class="container-button-controls">
+                        <button class="carousel-control-prev" type="button" aria-label="Précédent">
+                            <img src="/assets/images/arrow-left.svg" alt="" height="35" width="35" />
+                        </button>
+                        <button class="carousel-control-next" type="button" aria-label="Suivant">
+                            <img src="/assets/images/arrow-right.svg" alt="" height="35" width="35" />
+                        </button>
+                    </div>
+                </div>
+                <div class="carousel" id="exempleCarousel">
+                    <div class="carousel-track"></div>
+                </div>
+            </div>
+            <div
+                class="btn-container relative group inline-flex items-center w-max-w"
+                x-data="{ hover: false }"
+                x-on:mouseenter="hover = true"
+                x-on:mouseleave="hover = false"
+            >
+                <svg width="0" height="0" color-interpolation-filters="sRGB">
+                    <defs>
+                        <filter id="buttonFilter">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                            <feColorMatrix
+                                in="blur"
+                                mode="matrix"
+                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                result="buttonFilter"
+                            ></feColorMatrix>
+                            <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                            <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                        </filter>
+                    </defs>
+                </svg>
+                <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                    <p class="btn-text bg-midnight-green">Faire ce voyage</p>
+                    <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                </a>
+                <div class="btn-icon transition-transform js-button-arrow">
+                    <div class="transition-transform transform js-button-arrow-icon-primary">
+                        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                stroke="#fffbfa"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bandeau">
+            <div class="container">
+                <div class="bandeau-inner">
+                    <div class="bandeau-left">
+                        <h2 class="dark-green">Envie de créer le vôtre&nbsp;?</h2>
+                        <p class="midnight-green mb-0">
+                            Ajoutez vos destinations coups de cœur et construisez votre propre itinéraire étape par étape. Chaque lieu que vous
+                            sélectionnez apparaîtra ici pour former votre voyage unique.
+                        </p>
+                    </div>
+                    <div class="bandeau-right">
+                        <div
+                            class="btn-container relative group inline-flex items-center w-max-w"
+                            x-data="{ hover: false }"
+                            x-on:mouseenter="hover = true"
+                            x-on:mouseleave="hover = false"
+                        >
+                            <svg width="0" height="0" color-interpolation-filters="sRGB">
+                                <defs>
+                                    <filter id="buttonFilter">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                        <feColorMatrix
+                                            in="blur"
+                                            mode="matrix"
+                                            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                            result="buttonFilter"
+                                        ></feColorMatrix>
+                                        <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                        <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                                    </filter>
+                                </defs>
+                            </svg>
+                            <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                                <p class="btn-text bg-sand-brown">Composer mon itinéraire</p>
+                                <div class="btn-icon-container bg-sand-brown transition-transform js-button-icon"></div>
+                            </a>
+                            <div class="btn-icon transition-transform js-button-arrow">
+                                <div class="transition-transform transform js-button-arrow-icon-primary">
+                                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                            stroke="#fffbfa"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-slider-section carousel-container">
+            <div class="carousel-container container">
+                <div class="titre-arrows">
+                    <div class="container-titre">
+                        <h2 class="h2-35">C’est ici que tout commence</h2>
+                        <p class="midnight-green">
+                            À chaque lieu sélectionné, une nouvelle étape s’ajoute à votre <span>aventure</span>. Laissez-vous inspirer, amusez-vous à
+                            <span>construire votre itinéraire</span> et imaginez déjà les souvenirs à venir.
+                        </p>
+                    </div>
+                    <div class="container-button-controls">
+                        <button class="carousel-control-prev carousel-control-prev" type="button" aria-label="Précédent">
+                            <img src="/assets/images/arrow-left.svg" alt="" height="35" width="35" />
+                        </button>
+                        <button class="carousel-control-next carousel-control-next" type="button" aria-label="Suivant">
+                            <img src="/assets/images/arrow-right.svg" alt="" height="35" width="35" />
+                        </button>
+                    </div>
+                </div>
+
+                <div class="carousel" id="finalCarousel">
+                    <div class="carousel-track"></div>
+                </div>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-content">
+                        <h3>Votre itinéraire est vide</h3>
+                        <p>Commencez à créer votre voyage en choisissant un pays et en sélectionnant vos destinations préférées.</p>
+                        <a href="choisir.html" class="btn btn-primary">Commencer mon voyage</a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="btn-container relative group inline-flex items-center w-max-w"
+                x-data="{ hover: false }"
+                x-on:mouseenter="hover = true"
+                x-on:mouseleave="hover = false"
+            >
+                <svg width="0" height="0" color-interpolation-filters="sRGB">
+                    <defs>
+                        <filter id="buttonFilter">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                            <feColorMatrix
+                                in="blur"
+                                mode="matrix"
+                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                result="buttonFilter"
+                            ></feColorMatrix>
+                            <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                            <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                        </filter>
+                    </defs>
+                </svg>
+                <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                    <p class="btn-text bg-midnight-green">Voir mon voyage</p>
+                    <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                </a>
+                <div class="btn-icon transition-transform js-button-arrow">
+                    <div class="transition-transform transform js-button-arrow-icon-primary">
+                        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                stroke="#fffbfa"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-partenaire">
+            <div class="container">
+                <h2 class="h1 dark-green text-center">Profitez de votre voyage en toute sérénité grâce à nos partenaires&nbsp;!</h2>
+            </div>
+            <div class="partenaire-banner">
+                <div class="partenaire-container">
+                    <div class="group">
+                        <a href="https://www.booking.com/" target="_blank">
+                            <img src="/assets/images/partners/booking.svg" alt="Logo Booking.com" />
+                        </a>
+                        <a href="https://www.skyscanner.fr/" target="_blank">
+                            <img src="/assets/images/partners/skyscanner.png" alt="Logo Skyscanner" />
+                        </a>
+                        <a href="https://www.airbnb.fr/" target="_blank">
+                            <img src="/assets/images/partners/airbnb.png" alt="Logo Airbnb" />
+                        </a>
+                        <a href="https://www.airfrance.fr/" target="_blank">
+                            <img src="/assets/images/partners/airfrance.png" alt="Logo Air France" />
+                        </a>
+                        <a href="https://www.getyourguide.fr/" target="_blank">
+                            <img src="/assets/images/partners/get-your-guide.png" alt="Logo GetYourGuide" />
+                        </a>
+                        <a href="https://www.axa-assistance.fr/" target="_blank">
+                            <img src="/assets/images/partners/axa.svg" alt="Logo AXA Travel" />
+                        </a>
+                        <a href="https://www.sncf-connect.com/" target="_blank">
+                            <img src="/assets/images/partners/sncf-connect.jpg" alt="Logo SNCF Connect" />
+                        </a>
+                        <a href="https://www.revolut.com/" target="_blank">
+                            <img src="/assets/images/partners/revolut.png" alt="Logo Revolut" />
+                        </a>
+                        <a href="https://www.tripadvisor.fr/" target="_blank">
+                            <img src="/assets/images/partners/tripadvisor.svg" alt="Logo TripAdvisor" />
+                        </a>
+                        <a href="https://www.expedia.fr/" target="_blank">
+                            <img src="/assets/images/partners/expedia.svg" alt="Logo Expedia" />
+                        </a>
+                    </div>
+                    <div aria-hidden="" class="group">
+                        <a href="https://www.booking.com/" target="_blank">
+                            <img src="/assets/images/partners/booking.svg" alt="Logo Booking.com" />
+                        </a>
+                        <a href="https://www.skyscanner.fr/" target="_blank">
+                            <img src="/assets/images/partners/skyscanner.png" alt="Logo Skyscanner" />
+                        </a>
+                        <a href="https://www.airbnb.fr/" target="_blank">
+                            <img src="/assets/images/partners/airbnb.png" alt="Logo Airbnb" />
+                        </a>
+                        <a href="https://www.airfrance.fr/" target="_blank">
+                            <img src="/assets/images/partners/airfrance.svg" alt="Logo Air France" />
+                        </a>
+                        <a href="https://www.getyourguide.fr/" target="_blank">
+                            <img src="/assets/images/partners/get-your-guide.png" alt="Logo GetYourGuide" />
+                        </a>
+                        <a href="https://www.axa-assistance.fr/" target="_blank">
+                            <img src="/assets/images/partners/axa.svg" alt="Logo AXA Travel" />
+                        </a>
+                        <a href="https://www.sncf-connect.com/" target="_blank">
+                            <img src="/assets/images/partners/sncf-connect.jpg" alt="Logo SNCF Connect" />
+                        </a>
+                        <a href="https://www.revolut.com/" target="_blank">
+                            <img src="/assets/images/partners/revolut.png" alt="Logo Revolut" />
+                        </a>
+                        <a href="https://www.tripadvisor.fr/" target="_blank">
+                            <img src="/assets/images/partners/tripadvisor.svg" alt="Logo TripAdvisor" />
+                        </a>
+                        <a href="https://www.expedia.fr/" target="_blank">
+                            <img src="/assets/images/partners/expedia.svg" alt="Logo Expedia" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="title">
+                    <h2 class="h1 dark-green">Le monde à <span class="dark-gradient">porter de mains</span></h2>
+                    <p class="midnight-green h2 h2-alatsi">Un voyage de rêve en seulement quelques clics</p>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html" class="footer-link h2-35">Accueil</a></li>
+                        <li><a href="choisir.html" class="footer-link h2-35">Choisir un pays</a></li>
+                        <li><a href="itineraire.html" class="footer-link h2-35">Mon itinéraire</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+        <script src="assets/js/storage.js"></script>
+        <script src="assets/js/slider.js"></script>
+        <script src="assets/js/data-manager.js"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/stats-images.js"></script>
+        <script src="assets/js/components/btn.js"></script>
+        <script src="assets/js/components/createCarousel.js"></script>
+        <script src="assets/js/components/partenaireBanner.js"></script>
+    </body>
+</html>

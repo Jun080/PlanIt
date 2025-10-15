@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mon Itinéraire - Mon Itinéraire de Voyage</title>
+        <link rel="stylesheet" href="assets/css/base.css" />
+        <link rel="stylesheet" href="assets/css/components.css" />
+        <link rel="stylesheet" href="assets/css/layout.css" />
+        <link rel="stylesheet" href="assets/css/travel.css" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="container glass-effect">
+                <a href="index.html">
+                    <img src="./assets/images/logo.png" alt="Mon Itinéraire de Voyage" class="logo" />
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Accueil</a>
+                    <a href="choisir.html" class="nav-link">Choisir un pays</a>
+                    <a href="itineraire.html" class="nav-link active">Mon itinéraire</a>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title dark-green">Mon Itinéraire Personnalisé</h1>
+                <p class="hero-subtitle dark-lava h3">Gérez et organisez votre voyage selon vos envies</p>
+            </div>
+        </section>
+
+        <section class="itinerary-management">
+            <div class="container">
+                <div class="itinerary-header">
+                    <h3>Vos Destinations</h3>
+                    <div class="itinerary-controls">
+                        <button id="clearAllItinerary" class="btn btn-secondary">Tout effacer</button>
+                        <a href="choisir.html" class="btn btn-primary">Ajouter des destinations</a>
+                    </div>
+                </div>
+
+                <div class="slider-container" id="mainSlider">
+                    <div class="slider-wrapper">
+                        <div class="slider-track" id="mainSliderTrack"></div>
+                    </div>
+                    <div class="btn-container">
+                        <button class="slider-btn slider-btn-prev" id="mainSliderPrev">
+                            <img src="assets/images/arrow-left.svg" height="40" width="40" alt="Précédent" />
+                        </button>
+                        <div class="slider-dots" id="mainSliderDots"></div>
+                        <button class="slider-btn slider-btn-next" id="mainSliderNext">
+                            <img src="assets/images/arrow-right.svg" height="40" width="40" alt="Suivant" />
+                        </button>
+                    </div>
+                </div>
+
+                <div class="empty-itinerary" id="emptyItinerary">
+                    <div class="empty-content">
+                        <div class="empty-icon">✈️</div>
+                        <h4>Votre itinéraire est vide</h4>
+                        <p>
+                            Commencez à planifier votre voyage en ajoutant des destinations. Explorez nos suggestions par pays et créez le voyage de
+                            vos rêves !
+                        </p>
+                        <a href="choisir.html" class="btn btn-primary">Ajouter des destinations</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Mon Itinéraire de Voyage. Explorez le monde avec passion.</p>
+            </div>
+        </footer>
+
+        <script src="assets/js/storage.js"></script>
+        <script src="assets/js/slider.js"></script>
+        <script src="assets/js/data-manager.js"></script>
+        <script src="assets/js/app.js"></script>
+    </body>
+</html>

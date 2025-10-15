@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Choisir une destination - PlanIt</title>
+        <link rel="stylesheet" href="assets/css/base.css" />
+        <link rel="stylesheet" href="assets/css/layout.css" />
+        <link rel="stylesheet" href="assets/css/components.css" />
+        <link rel="stylesheet" href="assets/css/travel.css" />
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    </head>
+    <body>
+        <header class="header">
+            <div class="container glass-effect">
+                <a href="index.html">
+                    <img src="./assets/images/logo.png" alt="PlanIt" class="logo" />
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Accueil</a>
+                    <a href="choisir.html" class="nav-link active">Choisir</a>
+                    <a href="itineraire.html" class="nav-link">Itinéraire</a>
+                    <a href="chat-ia.html" class="nav-link">Chat IA</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <h1 class="hero-title dark-green">Choisissez votre prochaine destination</h1>
+                    <p class="hero-subtitle dark-lava h3">Découvrez des destinations uniques et ajoutez-les à votre itinéraire personnalisé</p>
+                </div>
+            </section>
+
+            <section class="destinations-section">
+                <div class="container">
+                    <div class="filters" x-data="{ activeFilter: 'all' }">
+                        <h2>Filtrer par type</h2>
+                        <div class="filter-buttons">
+                            <button
+                                @click="activeFilter = 'all'; destinationChooser?.filterDestinations('all')"
+                                :class="{ active: activeFilter === 'all' }"
+                                class="btn-filter"
+                            >
+                                Toutes
+                            </button>
+                            <button
+                                @click="activeFilter = 'beach'; destinationChooser?.filterDestinations('beach')"
+                                :class="{ active: activeFilter === 'beach' }"
+                                class="btn-filter"
+                            >
+                                Plage
+                            </button>
+                            <button
+                                @click="activeFilter = 'mountain'; destinationChooser?.filterDestinations('mountain')"
+                                :class="{ active: activeFilter === 'mountain' }"
+                                class="btn-filter"
+                            >
+                                Montagne
+                            </button>
+                            <button
+                                @click="activeFilter = 'culture'; destinationChooser?.filterDestinations('culture')"
+                                :class="{ active: activeFilter === 'culture' }"
+                                class="btn-filter"
+                            >
+                                Culture
+                            </button>
+                        </div>
+                    </div>
+                    <div class="destinations-grid" id="destinationsList"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 PlanIt. Explorez le monde avec passion.</p>
+            </div>
+        </footer>
+
+        <script src="assets/js/storage.js"></script>
+        <script src="assets/js/data-manager.js"></script>
+        <script src="assets/js/app.js"></script>
+    </body>
+</html>

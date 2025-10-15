@@ -1,0 +1,154 @@
+{
+    "cityTags": {
+        "paris": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["belgique", "luxembourg", "suisse", "allemagne", "italie", "espagne"]
+        },
+        "nice": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": ["italie"]
+        },
+        "lyon": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["suisse", "italie"]
+        },
+        "mont-blanc": {
+            "beach": false,
+            "mountain": true,
+            "neighbors": ["suisse", "italie"]
+        },
+        "rome": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["vatican"]
+        },
+        "venice": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["autriche", "slovenie"]
+        },
+        "los-angeles": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": []
+        },
+        "londres": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["france", "ecosse", "pays-de-galles", "irlande-du-nord"]
+        },
+        "alexandrie": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": ["israel", "libye"]
+        },
+        "toronto": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["etats-unis"]
+        },
+        "so-paulo": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["argentine", "uruguay", "paraguay", "bolivie", "perou", "colombie", "venezuela", "guyane", "suriname"]
+        },
+        "vilnius": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["lettonie", "belarus", "pologne", "russie"]
+        },
+        "amalfi": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": []
+        },
+        "tuscany": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": []
+        },
+        "tokyo": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": []
+        },
+        "kyoto": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": []
+        },
+        "osaka": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": []
+        },
+        "mount-fuji": {
+            "beach": false,
+            "mountain": true,
+            "neighbors": []
+        },
+        "rio": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": []
+        },
+        "iguazu": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["argentine"]
+        },
+        "salvador": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": []
+        },
+        "amazon": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["perou", "colombie", "venezuela", "guyane", "suriname", "bolivie"]
+        },
+        "santorini": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": []
+        },
+        "athens": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["albanie", "bulgarie", "macedoine", "turquie"]
+        },
+        "mykonos": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": []
+        },
+        "crete": {
+            "beach": true,
+            "mountain": true,
+            "neighbors": []
+        },
+        "bangkok": {
+            "beach": false,
+            "mountain": false,
+            "neighbors": ["laos", "cambodge", "malaisie", "myanmar"]
+        },
+        "phuket": {
+            "beach": true,
+            "mountain": false,
+            "neighbors": ["malaisie"]
+        },
+        "chiang-mai": {
+            "beach": false,
+            "mountain": true,
+            "neighbors": ["laos", "myanmar"]
+        },
+        "krabi": {
+            "beach": true,
+            "mountain": true,
+            "neighbors": ["malaisie"]
+        }
+    }
+}

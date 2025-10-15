@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Choisir un Pays - Mon Itinéraire de Voyage</title>
+        <link rel="stylesheet" href="assets/css/base.css" />
+        <link rel="stylesheet" href="assets/css/components.css" />
+        <link rel="stylesheet" href="assets/css/layout.css" />
+        <link rel="stylesheet" href="assets/css/travel.css" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="container glass-effect">
+                <a href="index.html">
+                    <img src="./assets/images/logo.png" alt="Mon Itinéraire de Voyage" class="logo" />
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Accueil</a>
+                    <a href="choisir.html" class="nav-link active">Choisir un pays</a>
+                    <a href="itineraire.html" class="nav-link">Mon itinéraire</a>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title dark-green">Choisissez votre destination</h1>
+                <p class="hero-subtitle dark-lava h3">Sélectionnez un pays et découvrez ses merveilles</p>
+            </div>
+            <div class="container">
+                <div class="selection-header">
+                    <h3>Sélectionner un pays</h3>
+                    <div class="country-dropdown-container">
+                        <select id="countrySelect" class="country-select">
+                            <option value="">Choisissez un pays...</option>
+                            <option value="france">France</option>
+                            <option value="italy">Italie</option>
+                            <option value="japan">Japon</option>
+                            <option value="brazil">Brésil</option>
+                            <option value="greece">Grèce</option>
+                            <option value="thailand">Thaïlande</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="places-gallery">
+            <div class="container">
+                <div class="gallery-header">
+                    <h3>Destinations disponibles</h3>
+                    <p>Explorez les destinations et ajoutez-les à votre itinéraire</p>
+                </div>
+
+                <div class="slider-container" id="destinationsSlider">
+                    <div class="slider-wrapper">
+                        <div class="slider-track" id="destinationsSliderTrack"></div>
+                    </div>
+                    <div class="btn-container">
+                        <button class="slider-btn slider-btn-prev" id="destinationsSliderPrev">
+                            <img src="assets/images/arrow-left.svg" height="40" width="40" alt="Précédent" />
+                        </button>
+                        <div class="slider-dots" id="destinationsSliderDots"></div>
+                        <button class="slider-btn slider-btn-next" id="destinationsSliderNext">
+                            <img src="assets/images/arrow-right.svg" height="40" width="40" alt="Suivant" />
+                        </button>
+                    </div>
+                </div>
+
+                <div class="places-grid" id="placesGrid"></div>
+
+                <div class="no-selection" id="noSelection" style="display: none">
+                    <div class="no-selection-content">
+                        <h4>Sélectionnez un pays</h4>
+                        <p>Choisissez un pays dans le menu déroulant ci-dessus pour voir plus de détails.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="itinerary-preview">
+            <div class="container">
+                <h3>Votre itinéraire actuel</h3>
+                <div class="current-itinerary" id="currentItinerary">
+                    <div class="itinerary-empty" id="itineraryEmpty">
+                        <p>Votre itinéraire est vide. Ajoutez des destinations pour commencer !</p>
+                    </div>
+                    <div class="itinerary-items" id="itineraryItems"></div>
+                </div>
+                <div class="itinerary-actions" id="itineraryActions" style="display: none">
+                    <a href="itineraire.html" class="btn btn-primary">Voir mon itinéraire complet</a>
+                    <button id="clearItinerary" class="btn btn-secondary">Tout effacer</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Mon Itinéraire de Voyage. Explorez le monde avec passion.</p>
+            </div>
+        </footer>
+
+        <script src="assets/js/storage.js"></script>
+        <script src="assets/js/slider.js"></script>
+        <script src="assets/js/data-manager.js"></script>
+        <script src="assets/js/app.js"></script>
+    </body>
+</html>
