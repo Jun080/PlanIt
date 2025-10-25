@@ -1,14 +1,11 @@
-// Fonction pour récupérer des images de villes depuis l'API
 async function getFirstCityImages(limit = 4) {
     try {
         if (!window.dataManager?.fetchWikidataCities) {
             throw new Error("fetchWikidataCities non disponible");
         }
 
-        // Demander plus de villes pour compenser les doublons éventuels
         const cities = await window.dataManager.fetchWikidataCities({ limit: limit * 3, minPopulation: 500000 });
 
-        // Déduplication et filtrage pour avoir exactement le nombre demandé
         const uniqueCities = cities
             .filter((city) => city.image && city.image.trim() !== "")
             .filter((city, index, arr) => arr.findIndex((c) => c.name === city.name) === index)

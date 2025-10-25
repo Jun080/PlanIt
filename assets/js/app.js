@@ -1,3 +1,20 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const burger = document.getElementById("burger-menu");
+    const nav = document.getElementById("main-nav");
+    if (burger && nav) {
+        burger.addEventListener("click", () => {
+            nav.classList.toggle("open");
+            burger.classList.toggle("open");
+        });
+        nav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                nav.classList.remove("open");
+                burger.classList.remove("open");
+            });
+        });
+    }
+});
+
 class DestinationChooser {
     constructor() {
         this.destinations = [];
@@ -15,10 +32,27 @@ class DestinationChooser {
         try {
             dataManager.enableWikidata();
             const destinations = await dataManager.getAllDestinations();
+            const response = await fetch("assets/data/travel-data.json");
+            const travelData = await response.json();
+            const cityTags = travelData.cityTags;
 
-            const uniqueDestinations = destinations.filter(
+            const filtered = destinations.filter(
                 (dest, index, self) => index === self.findIndex((d) => d.name === dest.name && d.country === dest.country)
             );
+
+            const uniqueDestinations = filtered.map((city) => {
+                const cityKey = city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-");
+                const tags = cityTags[cityKey] || {
+                    historic: false,
+                    nightlife: false,
+                    riverside: false,
+                };
+                return {
+                    ...city,
+                    tags,
+                    _tagKey: cityKey,
+                };
+            });
 
             this.destinations = uniqueDestinations;
             this.filteredDestinations = uniqueDestinations;
@@ -33,10 +67,14 @@ class DestinationChooser {
 
         if (type === "all") {
             this.filteredDestinations = this.destinations;
-        } else if (type === "beach") {
-            this.filteredDestinations = this.destinations.filter((dest) => dest.tags?.beach === true || dest.type === "beach");
-        } else if (type === "mountain") {
-            this.filteredDestinations = this.destinations.filter((dest) => dest.tags?.mountain === true || dest.type === "nature");
+        } else if (type === "historic") {
+            this.filteredDestinations = this.destinations.filter((dest) => dest.tags?.historic === true);
+        } else if (type === "nightlife") {
+            this.filteredDestinations = this.destinations.filter((dest) => dest.tags?.nightlife === true);
+        } else if (type === "riverside") {
+            this.filteredDestinations = this.destinations.filter((dest) => dest.tags?.riverside === true);
+        } else {
+            this.filteredDestinations = [];
         }
 
         this.renderDestinations();
@@ -79,42 +117,74 @@ class DestinationChooser {
             return;
         }
 
+        const itinerary = StorageManager.getItinerary();
+
         container.innerHTML = this.filteredDestinations
-            .map(
-                (destination) => `
-                <div class="destination-card" x-data="{ hovered: false }" @mouseenter="hovered = true" @mouseleave="hovered = false">
-                    <div class="destination-image">
+            .map((city) => {
+                const cityKey = city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-");
+                const isInItinerary = itinerary.some((dest) => dest.name.toLowerCase().replace(/\s+/g, "-") === cityKey);
+
+                const tagIcons = [];
+                if (city.tags?.historic) tagIcons.push('<img src="assets/images/icons/icon-historic.svg" alt="Historique" class="tag-icon">');
+                if (city.tags?.nightlife) tagIcons.push('<img src="assets/images/icons/icon-nightlife.svg" alt="Vie nocturne" class="tag-icon">');
+                if (city.tags?.riverside) tagIcons.push('<img src="assets/images/icons/icon-riverside.svg" alt="Bord de rivière" class="tag-icon">');
+                const tagsDisplay = tagIcons.length > 0 ? tagIcons.join("") : "";
+
+                return `
+                <div class="destination-card">
+                    <div class="btn-destinations-container">
                         ${
-                            destination.image
-                                ? `<img src="${destination.image}" alt="${destination.name}" loading="lazy">`
-                                : `<div class="placeholder-image">
-                                <span>${destination.name.charAt(0)}</span>
-                            </div>`
+                            isInItinerary
+                                ? `<button class="remove-btn" data-city-id="${cityKey}"><img src="assets/images/icon-delete.svg" alt="retirer"></button>`
+                                : `<button class="add-btn" data-city-id="${cityKey}"><img src="assets/images/icon-add.svg" alt="ajouter"></button>`
                         }
-                        <div class="destination-overlay" :class="{ 'hovered': hovered }">
-                            <button 
-                                class="btn-add-destination" 
-                                data-destination-id="${destination.id}"
-                                onclick="destinationChooser.addToItinerary(${JSON.stringify(destination).replace(/"/g, "&quot;")})"
-                            >
-                                Ajouter à l'itinéraire
-                            </button>
-                        </div>
                     </div>
-                    <div class="destination-info">
-                        <h3>${destination.name}</h3>
-                        <p class="destination-country">${destination.country}</p>
-                        
-                        <div class="destination-tags">
-                            ${destination.tags?.beach === true ? '<span class="tag tag-beach">Plage</span>' : ""}
-                            ${destination.tags?.mountain === true ? '<span class="tag tag-mountain">Montagne</span>' : ""}
-                            ${destination.tags?.vibe ? `<span class="tag tag-vibe">${destination.tags.vibe}</span>` : ""}
-                        </div>
+                    <div class="first-line">
+                        <span class="tags midnight-green ${tagsDisplay ? "glass-effect-max" : ""}">${tagsDisplay}</span>
+                    </div>
+                    <img src="${city.image}" alt="${city.name}" style="width: 384px; height: 250px; object-fit: cover; border-radius: 5px;">
+                    <div class="text">
+                        <h3 class="h2 dark-green">${city.name}</h3>
+                        <p class="midnight-green">${city.country}</p>
                     </div>
                 </div>
-            `
-            )
+                `;
+            })
             .join("");
+
+        container.querySelectorAll(".add-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                const cityId = btn.getAttribute("data-city-id");
+                const city = this.filteredDestinations.find((c) => (c._tagKey || c.name.toLowerCase().replace(/\s+/g, "-")) === cityId);
+                if (city) {
+                    StorageManager.addDestination(city);
+                    window.dispatchEvent(new CustomEvent("itineraryUpdated"));
+                    if (window.app && typeof window.app.updateMainSlider === "function") {
+                        window.app.updateMainSlider();
+                    }
+                    this.renderDestinations();
+                }
+            });
+        });
+
+        container.querySelectorAll(".remove-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                const cardElem = btn.closest(".destination-card");
+                const cityId = btn.getAttribute("data-city-id");
+                const country = cardElem?.querySelector(".midnight-green")?.textContent || "";
+
+                let itinerary = StorageManager.getItinerary();
+                itinerary = itinerary.filter((dest) => dest.id !== cityId);
+                StorageManager.saveItinerary(itinerary);
+
+                window.dispatchEvent(new CustomEvent("itineraryUpdated"));
+
+                if (window.app && typeof window.app.updateAll === "function") {
+                    window.app.updateAll();
+                }
+                this.renderDestinations();
+            });
+        });
     }
 }
 
@@ -126,12 +196,12 @@ class TravelApp {
     }
 
     getItinerary() {
-        const data = localStorage.getItem("travel-itinerary");
+        const data = localStorage.getItem("travel_itinerary");
         return data ? JSON.parse(data) : [];
     }
 
     saveItinerary(itinerary) {
-        localStorage.setItem("travel-itinerary", JSON.stringify(itinerary));
+        localStorage.setItem("travel_itinerary", JSON.stringify(itinerary));
     }
 
     getCurrentPage() {
@@ -151,69 +221,14 @@ class TravelApp {
     initPage() {
         switch (this.currentPage) {
             case "home":
-                this.initHomeSliders();
                 break;
             case "selection":
-                this.initSelectionSliders();
-                this.updateItineraryPreview();
+                this.updateItineraryDisplay();
                 break;
             case "itinerary":
-                this.initHomeSliders();
                 this.updateItineraryDisplay();
                 break;
         }
-    }
-
-    initHomeSliders() {
-        const mainElement = document.getElementById("mainSlider");
-        if (mainElement) {
-            this.sliders.set("main", new SliderManager("mainSlider"));
-            this.updateMainSlider();
-        }
-
-        const configs = [
-            { id: "popularSlider", type: "cultural" },
-            { id: "beachSlider", type: "beach" },
-            { id: "culturalSlider", type: "cultural" },
-        ];
-
-        configs.forEach(async (config) => {
-            const element = document.getElementById(config.id);
-            if (element) {
-                const slider = new SliderManager(config.id);
-                this.sliders.set(config.id, slider);
-                const destinations = await dataManager.getDestinationsByType(config.type);
-                slider.setSlides(destinations.slice(0, 8));
-            }
-        });
-    }
-
-    initSelectionSliders() {
-        const element = document.getElementById("destinationsSlider");
-        if (element) {
-            this.sliders.set("destinations", new SliderManager("destinationsSlider"));
-            dataManager.getAllDestinations().then((destinations) => {
-                this.sliders.get("destinations").setSlides(destinations);
-            });
-        }
-
-        dataManager.getCountries().then((countries) => {
-            const container = document.getElementById("countryCards");
-            if (container) {
-                container.innerHTML = Object.entries(countries)
-                    .map(
-                        ([id, country]) => `
-                        <div class="country-card" data-country="${id}">
-                            <h3>${country.name}</h3>
-                            <button class="btn btn-primary" onclick="app.showCountryDestinations('${id}')">
-                                Voir les destinations
-                            </button>
-                        </div>
-                    `
-                    )
-                    .join("");
-            }
-        });
     }
 
     updateMainSlider() {
@@ -221,6 +236,7 @@ class TravelApp {
         const emptyState = document.getElementById("emptyState");
         const mainSliderElement = document.getElementById("mainSlider");
 
+        console.log("Itinéraire actuel :", itinerary);
         if (itinerary.length === 0) {
             emptyState && (emptyState.style.display = "block");
             mainSliderElement && (mainSliderElement.style.display = "none");
@@ -242,57 +258,6 @@ class TravelApp {
         }
     }
 
-    updateItineraryPreview() {
-        const itinerary = this.getItinerary();
-        const emptyElement = document.getElementById("itineraryEmpty");
-        const itemsElement = document.getElementById("itineraryItems");
-        const actionsElement = document.getElementById("itineraryActions");
-
-        if (itinerary.length === 0) {
-            emptyElement && (emptyElement.style.display = "block");
-            itemsElement && (itemsElement.style.display = "none");
-            actionsElement && (actionsElement.style.display = "none");
-        } else {
-            emptyElement && (emptyElement.style.display = "none");
-            itemsElement && (itemsElement.style.display = "block");
-            actionsElement && (actionsElement.style.display = "flex");
-
-            if (itemsElement) {
-                itemsElement.innerHTML = `
-                    <div class="itinerary-carousel">
-                        <div class="carousel-track">
-                            ${itinerary
-                                .map(
-                                    (item, index) =>
-                                        `
-                                            <div class="itinerary-card">
-                                                <img src="${item.image}" alt="${item.name}" class="itinerary-card-image">
-                                                <div class="itinerary-card-content">
-                                                    <h3>${item.name}</h3>
-                                                    <p class="itinerary-card-country">${item.country}</p>
-                                                    <button class="itinerary-remove-btn" data-id="${item.id}">✕</button>
-                                                </div>
-                                            </div>
-                                        `
-                                )
-                                .join("")}
-                        </div>
-                        <div class="btn-container">
-                            <button class="carousel-btn carousel-btn-prev">
-                                <img src="assets/images/arrow-left.svg" height="40" width="40" alt="Précédent" />
-                            </button>
-                            <button class="carousel-btn carousel-btn-next">
-                                <img src="assets/images/arrow-right.svg" height="40" width="40" alt="Suivant" />
-                            </button>
-                        </div>
-                    </div>
-                `;
-
-                this.initItineraryCarousel();
-            }
-        }
-    }
-
     setupEvents() {
         document.addEventListener("click", (e) => {
             if (e.target.classList.contains("add-to-itinerary")) {
@@ -311,43 +276,6 @@ class TravelApp {
 
         const clearItineraryBtn = document.getElementById("clearItinerary");
         clearItineraryBtn?.addEventListener("click", () => this.clearAllItinerary());
-    }
-
-    initItineraryCarousel() {
-        const track = document.querySelector(".carousel-track");
-        const prevBtn = document.querySelector(".carousel-btn-prev");
-        const nextBtn = document.querySelector(".carousel-btn-next");
-
-        if (!track || !prevBtn || !nextBtn) return;
-
-        let currentIndex = 0;
-        const cards = track.children;
-        const visibleCards = Math.min(3, cards.length);
-
-        const updateCarousel = () => {
-            const cardWidth = 100 / visibleCards;
-            const translateX = -(currentIndex * cardWidth);
-            track.style.transform = `translateX(${translateX}%)`;
-
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex >= cards.length - visibleCards;
-        };
-
-        prevBtn.addEventListener("click", () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
-        });
-
-        nextBtn.addEventListener("click", () => {
-            if (currentIndex < cards.length - visibleCards) {
-                currentIndex++;
-                updateCarousel();
-            }
-        });
-
-        updateCarousel();
     }
 
     removeFromItineraryById(id) {
@@ -380,7 +308,6 @@ class TravelApp {
     updateAll() {
         this.updateItineraryDisplay();
         this.updateMainSlider();
-        this.updateItineraryPreview();
         this.sliders.forEach((slider) => slider.updateButtonStates?.());
     }
 
@@ -412,7 +339,6 @@ class TravelApp {
 const app = new TravelApp();
 window.app = app;
 
-// Initialiser DestinationChooser sur la page choisir.html
 let destinationChooser;
 document.addEventListener("DOMContentLoaded", () => {
     if (window.location.pathname.includes("choisir.html")) {

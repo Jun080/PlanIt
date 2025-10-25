@@ -1,154 +1,119 @@
 {
     "cityTags": {
-        "paris": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["belgique", "luxembourg", "suisse", "allemagne", "italie", "espagne"]
-        },
-        "nice": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": ["italie"]
-        },
-        "lyon": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["suisse", "italie"]
-        },
-        "mont-blanc": {
-            "beach": false,
-            "mountain": true,
-            "neighbors": ["suisse", "italie"]
-        },
-        "rome": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["vatican"]
-        },
-        "venice": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["autriche", "slovenie"]
-        },
-        "los-angeles": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": []
+        "moscou": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
         "londres": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["france", "ecosse", "pays-de-galles", "irlande-du-nord"]
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "alexandrie": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": ["israel", "libye"]
+        "berlin": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "toronto": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["etats-unis"]
+        "madrid": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": false
         },
-        "so-paulo": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["argentine", "uruguay", "paraguay", "bolivie", "perou", "colombie", "venezuela", "guyane", "suriname"]
+        "kiev": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "vilnius": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["lettonie", "belarus", "pologne", "russie"]
+        "rome": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "amalfi": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": []
+        "paris": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "tuscany": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": []
+        "minsk": {
+            "historic": false,
+            "nightlife": false,
+            "riverside": true
         },
-        "tokyo": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": []
+        "vienne": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "kyoto": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": []
+        "region-urbaine-de-katowice": {
+            "historic": false,
+            "nightlife": false,
+            "riverside": false
         },
-        "osaka": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": []
+        "varsovie": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "mount-fuji": {
-            "beach": false,
-            "mountain": true,
-            "neighbors": []
+        "bucarest": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": false
         },
-        "rio": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": []
+        "barcelone": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "iguazu": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["argentine"]
+        "budapest": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "salvador": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": []
+        "belgrade": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "amazon": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["perou", "colombie", "venezuela", "guyane", "suriname", "bolivie"]
+        "prague": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "santorini": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": []
+        "berlin-est": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "athens": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["albanie", "bulgarie", "macedoine", "turquie"]
+        "region-de-bruxelles-capitale": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": false
         },
-        "mykonos": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": []
+        "sofia": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": false
         },
-        "crete": {
-            "beach": true,
-            "mountain": true,
-            "neighbors": []
+        "tbilissi": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "bangkok": {
-            "beach": false,
-            "mountain": false,
-            "neighbors": ["laos", "cambodge", "malaisie", "myanmar"]
+        "stockholm": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         },
-        "phuket": {
-            "beach": true,
-            "mountain": false,
-            "neighbors": ["malaisie"]
+        "amsterdam": {
+            "historic": true,
+            "nightlife": true,
+            "riverside": true
         },
-        "chiang-mai": {
-            "beach": false,
-            "mountain": true,
-            "neighbors": ["laos", "myanmar"]
-        },
-        "krabi": {
-            "beach": true,
-            "mountain": true,
-            "neighbors": ["malaisie"]
+        "zagreb": {
+            "historic": true,
+            "nightlife": false,
+            "riverside": true
         }
     }
 }

@@ -38,7 +38,7 @@ class DataManager {
         this.useWikidata = true;
     }
 
-    async fetchWikidataCities({ limit = 30, minPopulation = 500000 } = {}) {
+    async fetchWikidataCities({ limit = 60, minPopulation = 500000 } = {}) {
         const sparql = `
             SELECT ?city ?cityLabel ?countryLabel ?image ?population WHERE {
             ?city wdt:P31/wdt:P279* wd:Q515.
@@ -47,6 +47,7 @@ class DataManager {
             ?city wdt:P1082 ?population.
             FILTER(?population > ${minPopulation})
             OPTIONAL { ?city wdt:P18 ?image }
+            FILTER(NOT EXISTS { ?city wdt:P576 ?dissolution })
             SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". }
             }
             ORDER BY DESC(?population)
@@ -58,17 +59,19 @@ class DataManager {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            const allCities = data.results.bindings.map((item) => {
-                const imgUrl = item.image?.value || "";
-                const city = item.cityLabel.value;
-                const country = item.countryLabel.value;
-                return {
-                    id: city.toLowerCase().replace(/\s+/g, "-"),
-                    name: city,
-                    country: country,
-                    image: imgUrl,
-                };
-            });
+            const allCities = data.results.bindings
+                .map((item) => {
+                    const imgUrl = item.image?.value || "";
+                    const city = item.cityLabel.value;
+                    const country = item.countryLabel.value;
+                    return {
+                        id: city.toLowerCase().replace(/\s+/g, "-"),
+                        name: city,
+                        country: country,
+                        image: imgUrl,
+                    };
+                })
+                .filter((city) => !city.name.includes(" "));
 
             const diversifiedCities = [];
             const countryCount = {};
@@ -107,17 +110,9 @@ class DataManager {
                         countryData.places.forEach((place) => {
                             const key = place.id;
                             baseTags[key] = {
-                                beach: place.type === "beach",
-                                mountain: place.type === "nature",
-                                vibe:
-                                    place.type === "cultural"
-                                        ? "culturelle"
-                                        : place.type === "beach"
-                                        ? "détente"
-                                        : place.type === "nature"
-                                        ? "aventure"
-                                        : null,
-                                neighbors: [],
+                                historic: place.type === "cultural",
+                                nightlife: place.type === "nightlife",
+                                riverside: place.type === "riverside",
                             };
                         });
                     }
@@ -162,20 +157,18 @@ class DataManager {
 
             if (!existing) {
                 newEntries[key] = {
-                    beach: null,
-                    mountain: null,
-                    vibe: null,
-                    neighbors: [],
+                    historic: false,
+                    nightlife: false,
+                    riverside: false,
                 };
             }
 
             return {
                 ...city,
                 tags: existing || {
-                    beach: null,
-                    mountain: null,
-                    vibe: null,
-                    neighbors: [],
+                    historic: false,
+                    nightlife: false,
+                    riverside: false,
                 },
                 _tagKey: key,
             };

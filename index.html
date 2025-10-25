@@ -16,8 +16,9 @@
                 <a href="index.html">
                     <img src="./assets/images/logo.png" alt="Mon Itinéraire de Voyage" class="logo" />
                 </a>
-                <nav class="nav">
-                    <a href="index.html" class="nav-link active">Accueil</a>
+                <button class="burger" id="burger-menu" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+                <nav class="nav" id="main-nav">
+                    <a href="index.html" class="nav-link">Accueil</a>
                     <a href="choisir.html" class="nav-link">Choisir un pays</a>
                     <a href="itineraire.html" class="nav-link">Mon itinéraire</a>
                 </nav>
@@ -95,7 +96,7 @@
             </div>
         </section>
 
-        <section class="exemple-carousel container">
+        <section class="exemple-carousel hidden-x">
             <div class="carousel-container container">
                 <div class="titre-arrows">
                     <div class="container-titre">
@@ -141,7 +142,7 @@
                     </defs>
                 </svg>
                 <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
-                    <p class="btn-text bg-midnight-green">Faire ce voyage</p>
+                    <p class="btn-text bg-midnight-green">Choisir ma prochaine destination</p>
                     <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
                 </a>
                 <div class="btn-icon transition-transform js-button-arrow">
@@ -215,7 +216,7 @@
             </div>
         </section>
 
-        <section class="main-slider-section carousel-container">
+        <section class="main-slider-section carousel-container hidden-x">
             <div class="carousel-container container">
                 <div class="titre-arrows">
                     <div class="container-titre">
@@ -226,10 +227,10 @@
                         </p>
                     </div>
                     <div class="container-button-controls">
-                        <button class="carousel-control-prev carousel-control-prev" type="button" aria-label="Précédent">
+                        <button class="carousel-control-prev" type="button" aria-label="Précédent">
                             <img src="/assets/images/arrow-left.svg" alt="" height="35" width="35" />
                         </button>
-                        <button class="carousel-control-next carousel-control-next" type="button" aria-label="Suivant">
+                        <button class="carousel-control-next" type="button" aria-label="Suivant">
                             <img src="/assets/images/arrow-right.svg" alt="" height="35" width="35" />
                         </button>
                     </div>
@@ -243,7 +244,45 @@
                     <div class="empty-content">
                         <h3>Votre itinéraire est vide</h3>
                         <p>Commencez à créer votre voyage en choisissant un pays et en sélectionnant vos destinations préférées.</p>
-                        <a href="choisir.html" class="btn btn-primary">Commencer mon voyage</a>
+                        <div
+                            class="btn-container relative group inline-flex items-center w-max-w"
+                            x-data="{ hover: false }"
+                            x-on:mouseenter="hover = true"
+                            x-on:mouseleave="hover = false"
+                        >
+                            <svg width="0" height="0" color-interpolation-filters="sRGB">
+                                <defs>
+                                    <filter id="buttonFilter">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                        <feColorMatrix
+                                            in="blur"
+                                            mode="matrix"
+                                            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                            result="buttonFilter"
+                                        ></feColorMatrix>
+                                        <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                        <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                                    </filter>
+                                </defs>
+                            </svg>
+                            <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                                <p class="btn-text bg-midnight-green">Commencer mon voyage</p>
+                                <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                            </a>
+                            <div class="btn-icon transition-transform js-button-arrow">
+                                <div class="transition-transform transform js-button-arrow-icon-primary">
+                                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                            stroke="#fffbfa"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -252,6 +291,7 @@
                 x-data="{ hover: false }"
                 x-on:mouseenter="hover = true"
                 x-on:mouseleave="hover = false"
+                id="view-itinerary"
             >
                 <svg width="0" height="0" color-interpolation-filters="sRGB">
                     <defs>
@@ -337,7 +377,7 @@
                             <img src="/assets/images/partners/airbnb.png" alt="Logo Airbnb" />
                         </a>
                         <a href="https://www.airfrance.fr/" target="_blank">
-                            <img src="/assets/images/partners/airfrance.svg" alt="Logo Air France" />
+                            <img src="/assets/images/partners/airfrance.png" alt="Logo Air France" />
                         </a>
                         <a href="https://www.getyourguide.fr/" target="_blank">
                             <img src="/assets/images/partners/get-your-guide.png" alt="Logo GetYourGuide" />

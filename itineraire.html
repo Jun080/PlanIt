@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="assets/css/components.css" />
         <link rel="stylesheet" href="assets/css/layout.css" />
         <link rel="stylesheet" href="assets/css/travel.css" />
+        <link rel="stylesheet" href="assets/css/utils.css" />
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body>
         <header class="header">
@@ -15,63 +17,220 @@
                 <a href="index.html">
                     <img src="./assets/images/logo.png" alt="Mon Itinéraire de Voyage" class="logo" />
                 </a>
-                <nav class="nav">
+                <button class="burger" id="burger-menu" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+                <nav class="nav" id="main-nav">
                     <a href="index.html" class="nav-link">Accueil</a>
                     <a href="choisir.html" class="nav-link">Choisir un pays</a>
-                    <a href="itineraire.html" class="nav-link active">Mon itinéraire</a>
+                    <a href="itineraire.html" class="nav-link">Mon itinéraire</a>
                 </nav>
             </div>
         </header>
 
-        <section class="hero">
-            <div class="container">
-                <h1 class="hero-title dark-green">Mon Itinéraire Personnalisé</h1>
-                <p class="hero-subtitle dark-lava h3">Gérez et organisez votre voyage selon vos envies</p>
-            </div>
-        </section>
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <h1 class="hero-title dark-green">Mon itinéraire de voyage</h1>
+                    <p class="hero-subtitle dark-lava h3">Retrouvez ici toutes les destinations que vous avez sélectionnées.</p>
+                    <p class="hero-subtitle dark-lava h3">
+                        Modifiez, réorganisez ou supprimez des étapes pour personnaliser votre aventure avant de partir&nbsp;!
+                    </p>
+                </div>
+            </section>
 
-        <section class="itinerary-management">
-            <div class="container">
-                <div class="itinerary-header">
-                    <h3>Vos Destinations</h3>
-                    <div class="itinerary-controls">
-                        <button id="clearAllItinerary" class="btn btn-secondary">Tout effacer</button>
-                        <a href="choisir.html" class="btn btn-primary">Ajouter des destinations</a>
+            <section class="main-slider-section carousel-container hidden-x">
+                <div class="carousel-container container">
+                    <div class="titre-arrows">
+                        <div class="container-titre">
+                            <h2 class="h2-35">Votre itinéraire personnalisé</h2>
+                            <p class="midnight-green">
+                                <span>Visualisez et modifiez</span> vos étapes pour créer le voyage <span>qui vous ressemble.</span> Ajoutez ou
+                                retirez des destinations à tout moment et préparez-vous à vivre une expérience inoubliable !
+                            </p>
+                        </div>
+                        <div class="container-button-controls">
+                            <button class="carousel-control-prev" type="button" aria-label="Précédent">
+                                <img src="/assets/images/arrow-left.svg" alt="" height="35" width="35" />
+                            </button>
+                            <button class="carousel-control-next" type="button" aria-label="Suivant">
+                                <img src="/assets/images/arrow-right.svg" alt="" height="35" width="35" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="carousel itinerary-page" id="finalCarousel">
+                        <div class="carousel-track"></div>
+                    </div>
+
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-content">
+                            <h3>Votre itinéraire est vide</h3>
+                            <p>Commencez à créer votre voyage en choisissant un pays et en sélectionnant vos destinations préférées.</p>
+                            <div
+                                class="btn-container relative group inline-flex items-center w-max-w"
+                                x-data="{ hover: false }"
+                                x-on:mouseenter="hover = true"
+                                x-on:mouseleave="hover = false"
+                            >
+                                <svg width="0" height="0" color-interpolation-filters="sRGB">
+                                    <defs>
+                                        <filter id="buttonFilter">
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                            <feColorMatrix
+                                                in="blur"
+                                                mode="matrix"
+                                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                                result="buttonFilter"
+                                            ></feColorMatrix>
+                                            <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                            <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                                        </filter>
+                                    </defs>
+                                </svg>
+                                <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                                    <p class="btn-text bg-midnight-green">Commencer mon voyage</p>
+                                    <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                                </a>
+                                <div class="btn-icon transition-transform js-button-arrow">
+                                    <div class="transition-transform transform js-button-arrow-icon-primary">
+                                        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                                stroke="#fffbfa"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="slider-container" id="mainSlider">
-                    <div class="slider-wrapper">
-                        <div class="slider-track" id="mainSliderTrack"></div>
-                    </div>
-                    <div class="btn-container">
-                        <button class="slider-btn slider-btn-prev" id="mainSliderPrev">
-                            <img src="assets/images/arrow-left.svg" height="40" width="40" alt="Précédent" />
-                        </button>
-                        <div class="slider-dots" id="mainSliderDots"></div>
-                        <button class="slider-btn slider-btn-next" id="mainSliderNext">
-                            <img src="assets/images/arrow-right.svg" height="40" width="40" alt="Suivant" />
-                        </button>
+                <div
+                    class="btn-container relative group inline-flex items-center w-max-w"
+                    x-data="{ hover: false }"
+                    x-on:mouseenter="hover = true"
+                    x-on:mouseleave="hover = false"
+                >
+                    <svg width="0" height="0" color-interpolation-filters="sRGB">
+                        <defs>
+                            <filter id="buttonFilter">
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                <feColorMatrix
+                                    in="blur"
+                                    mode="matrix"
+                                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                    result="buttonFilter"
+                                ></feColorMatrix>
+                                <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                            </filter>
+                        </defs>
+                    </svg>
+                    <button
+                        onclick="localStorage.setItem('travel_itinerary', '[]'); window.dispatchEvent(new CustomEvent('itineraryUpdated'));"
+                        class="inline-flex"
+                        style="filter: url(#buttonFilter)"
+                        id="clear-itinerary"
+                    >
+                        <p class="btn-text bg-midnight-green">Vider mon voyage</p>
+                        <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                    </button>
+                    <div class="btn-icon transition-transform js-button-arrow">
+                        <div class="transition-transform transform js-button-arrow-icon-primary">
+                            <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                    stroke="#fffbfa"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
                     </div>
                 </div>
-
-                <div class="empty-itinerary" id="emptyItinerary">
-                    <div class="empty-content">
-                        <div class="empty-icon">✈️</div>
-                        <h4>Votre itinéraire est vide</h4>
-                        <p>
-                            Commencez à planifier votre voyage en ajoutant des destinations. Explorez nos suggestions par pays et créez le voyage de
-                            vos rêves !
-                        </p>
-                        <a href="choisir.html" class="btn btn-primary">Ajouter des destinations</a>
+            </section>
+            <section class="ia-chatbot-section">
+                <div class="glass-effect">
+                    <div class="container">
+                        <div class="container-titre">
+                            <h2 class="h2-35">Posez vos questions à l'assistant IA</h2>
+                            <p class="midnight-green">
+                                Ici, vous pouvez demander des <span>suggestions d'activités</span>, de <span>visites</span> ou de
+                                <span>lieux à découvrir</span> dans une ville de votre itinéraire.<br />
+                                Laissez-vous inspirer pour profiter au maximum de chaque étape de votre voyage&nbsp;!
+                            </p>
+                        </div>
+                        <div class="flex-group">
+                            <input type="text" id="userInput" placeholder="Pose ta question ici..." size="50" />
+                            <div
+                                class="btn-container relative group inline-flex items-center w-max-w"
+                                x-data="{ hover: false }"
+                                x-on:mouseenter="hover = true"
+                                x-on:mouseleave="hover = false"
+                                id="btn-send"
+                            >
+                                <svg width="0" height="0" color-interpolation-filters="sRGB">
+                                    <defs>
+                                        <filter id="buttonFilter">
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                            <feColorMatrix
+                                                in="blur"
+                                                mode="matrix"
+                                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                                result="buttonFilter"
+                                            ></feColorMatrix>
+                                            <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                            <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                                        </filter>
+                                    </defs>
+                                </svg>
+                                <button
+                                    onclick="localStorage.setItem('travel_itinerary', '[]'); window.dispatchEvent(new CustomEvent('itineraryUpdated'));"
+                                    class="inline-flex"
+                                    style="filter: url(#buttonFilter)"
+                                >
+                                    <p class="btn-text bg-dark-green">Envoyer</p>
+                                    <div class="btn-icon-container bg-dark-green transition-transform js-button-icon"></div>
+                                </button>
+                                <div class="btn-icon transition-transform js-button-arrow">
+                                    <div class="transition-transform transform js-button-arrow-icon-primary">
+                                        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                                stroke="#fffbfa"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre class="pre-wrap-response">
+                            <p id="response"></p>
+                        </pre>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
 
         <footer class="footer">
             <div class="container">
-                <p>&copy; 2024 Mon Itinéraire de Voyage. Explorez le monde avec passion.</p>
+                <div class="title">
+                    <h2 class="h1 dark-green">Le monde à <span class="dark-gradient">porter de mains</span></h2>
+                    <p class="midnight-green h2 h2-alatsi">Un voyage de rêve en seulement quelques clics</p>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html" class="footer-link h2-35">Accueil</a></li>
+                        <li><a href="choisir.html" class="footer-link h2-35">Choisir un pays</a></li>
+                        <li><a href="itineraire.html" class="footer-link h2-35">Mon itinéraire</a></li>
+                    </ul>
+                </div>
             </div>
         </footer>
 
@@ -79,5 +238,35 @@
         <script src="assets/js/slider.js"></script>
         <script src="assets/js/data-manager.js"></script>
         <script src="assets/js/app.js"></script>
+        <script src="assets/js/stats-images.js"></script>
+        <script src="assets/js/components/btn.js"></script>
+        <script src="assets/js/components/createCarousel.js"></script>
+        <script src="https://js.puter.com/v2/"></script>
+        <script>
+            const btnSend = document.getElementById("btn-send");
+            btnSend.addEventListener("click", sendMessage);
+            const userInput = document.getElementById("userInput");
+            userInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            async function sendMessage() {
+                const input = document.getElementById("userInput").value;
+                const responseBox = document.getElementById("response");
+                responseBox.textContent = "L'assistant réfléchit à la meilleure réponse pour vous...";
+
+                try {
+                    const result = await puter.ai.chat(input, {
+                        model: "gpt-5-nano",
+                    });
+                    responseBox.textContent = result;
+                } catch (error) {
+                    responseBox.textContent = "❌ Erreur : " + error.message;
+                }
+            }
+        </script>
     </body>
 </html>

@@ -8,6 +8,11 @@
     src: url("/assets/fonts/alatsi.woff");
 }
 
+@font-face {
+    font-family: "gordqucik";
+    src: url("/assets/fonts/gordqucik.otf");
+}
+
 :root {
     --dark-green: #032226;
     --midnight-green: #074f57;
@@ -95,7 +100,7 @@ body {
     padding-top: 24px;
 }
 
-body.homepage {
+body {
     content: "";
     height: 100%;
     width: 100%;
@@ -134,7 +139,7 @@ h1,
 
 h2,
 .h2 {
-    font-family: "beckan";
+    font-family: "gordqucik";
     line-height: 1.75rem;
     font-size: 1.75rem;
 }
@@ -158,11 +163,16 @@ h2,
     font-size: 1.75rem;
 }
 
-.tags {
-    font-family: "beckan";
+.tags,
+button {
+    font-family: "gordqucik";
     line-height: 1.125rem;
     font-weight: 400;
     font-size: 1rem;
+}
+
+button {
+    font-family: "Alatsi", sans-serif;
 }
 
 p {
@@ -244,9 +254,25 @@ header .container {
     }
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 978px) {
+    .footer {
+        padding-bottom: 17rem;
+
+        & .container {
+            grid-template-columns: 1fr;
+            gap: 4rem;
+
+            & .menu {
+                justify-content: flex-start;
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) {
     .footer {
         background-image: url("/assets/images/footer.png");
+        background-size: contain;
     }
 }
 
@@ -256,4 +282,60 @@ header .container {
 
 .mb-0 {
     margin-bottom: 0;
+}
+
+@media (max-width: 978px) {
+    header .container,
+    .container,
+    .container-small {
+        width: calc(100vw - 3rem);
+        margin: auto;
+    }
+
+    body {
+        background-size: 100%, auto, auto;
+    }
+
+    h1,
+    .h1 {
+        line-height: 3rem;
+        font-size: 3rem;
+    }
+
+    h2,
+    .h2 {
+        line-height: 1.3rem;
+        font-size: 1.2rem;
+    }
+
+    .h2-small {
+        line-height: 1.1rem;
+        font-size: 1.1rem;
+    }
+
+    .h2-35 {
+        line-height: 1.3rem;
+        font-size: 1.3rem;
+    }
+
+    .h2-beckan {
+        line-height: 1.3rem;
+        font-size: 1.3rem;
+    }
+
+    .tags,
+    button {
+        line-height: 1rem;
+        font-size: 0.95rem;
+    }
+
+    p {
+        line-height: 1.1rem;
+        font-size: 1rem;
+    }
+
+    .p-small {
+        font-size: 0.85rem;
+        line-height: 0.75rem;
+    }
 }

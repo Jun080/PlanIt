@@ -172,7 +172,7 @@
         margin-bottom: 1rem;
     }
 
-    & p {
+    & p:not(.btn-text) {
         color: var(--queen-blue);
         margin-bottom: 2rem;
         font-size: 1.1rem;

@@ -106,19 +106,23 @@
     align-items: center;
 
     & .nav-link {
-        color: var(--dark-lava);
+        color: var(--vanilla);
         font-weight: 700;
         text-decoration: none;
 
         &:hover,
         &.active {
-            color: var(--orange-red);
+            color: var(--sand-brown);
         }
     }
 }
 
 .hero {
-    padding: 190px 0 90px;
+    padding: 11.875rem 0 5.625rem;
+
+    @media (max-width: 978px) {
+        padding: 11.875rem 0 3.125rem;
+    }
 
     & h1 {
         margin-bottom: 1.2rem;
@@ -181,5 +185,69 @@
 
     & .partenaire-banner {
         margin-top: 9.375rem;
+    }
+}
+
+.destinations-section {
+    padding: 9.375rem 0;
+}
+
+@media (max-width: 978px) {
+    .stats {
+        padding-bottom: 6.375rem;
+
+        .parent {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 16px;
+        }
+
+        & .country {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            background-color: var(--midnight-green);
+            padding: 1.2rem;
+        }
+
+        & .ticket {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--blue-sky);
+
+            & img {
+                width: 80px;
+            }
+        }
+
+        & .images {
+            grid-column: 1 / 3;
+            grid-row: 2 / 3;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        & .glass {
+            grid-column: 1 / 3;
+            grid-row: 3 / 4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.2rem;
+            gap: 1.5rem;
+
+            & .container-text {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+
+    .section-partenaire {
+        padding: 9rem 0 4rem;
     }
 }

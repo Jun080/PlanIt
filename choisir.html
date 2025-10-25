@@ -5,22 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Choisir une destination - PlanIt</title>
         <link rel="stylesheet" href="assets/css/base.css" />
-        <link rel="stylesheet" href="assets/css/layout.css" />
         <link rel="stylesheet" href="assets/css/components.css" />
+        <link rel="stylesheet" href="assets/css/layout.css" />
         <link rel="stylesheet" href="assets/css/travel.css" />
+        <link rel="stylesheet" href="assets/css/utils.css" />
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body>
         <header class="header">
             <div class="container glass-effect">
                 <a href="index.html">
-                    <img src="./assets/images/logo.png" alt="PlanIt" class="logo" />
+                    <img src="./assets/images/logo.png" alt="Mon Itinéraire de Voyage" class="logo" />
                 </a>
-                <nav class="nav">
+                <button class="burger" id="burger-menu" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+                <nav class="nav" id="main-nav">
                     <a href="index.html" class="nav-link">Accueil</a>
-                    <a href="choisir.html" class="nav-link active">Choisir</a>
-                    <a href="itineraire.html" class="nav-link">Itinéraire</a>
-                    <a href="chat-ia.html" class="nav-link">Chat IA</a>
+                    <a href="choisir.html" class="nav-link">Choisir un pays</a>
+                    <a href="itineraire.html" class="nav-link">Mon itinéraire</a>
                 </nav>
             </div>
         </header>
@@ -33,38 +34,149 @@
                 </div>
             </section>
 
+            <section class="main-slider-section carousel-container hidden-x">
+                <div class="carousel-container container">
+                    <div class="titre-arrows">
+                        <div class="container-titre">
+                            <h2 class="h2-35">C’est ici que tout commence</h2>
+                            <p class="midnight-green">
+                                À chaque lieu sélectionné, une nouvelle étape s’ajoute à votre <span>aventure</span>. Laissez-vous inspirer,
+                                amusez-vous à <span>construire votre itinéraire</span> et imaginez déjà les souvenirs à venir.
+                            </p>
+                        </div>
+                        <div class="container-button-controls">
+                            <button class="carousel-control-prev" type="button" aria-label="Précédent">
+                                <img src="/assets/images/arrow-left.svg" alt="" height="35" width="35" />
+                            </button>
+                            <button class="carousel-control-next" type="button" aria-label="Suivant">
+                                <img src="/assets/images/arrow-right.svg" alt="" height="35" width="35" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="carousel" id="finalCarousel">
+                        <div class="carousel-track"></div>
+                    </div>
+
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-content">
+                            <h3>Votre itinéraire est vide</h3>
+                            <p>Commencez à créer votre voyage en choisissant un pays et en sélectionnant vos destinations préférées.</p>
+                            <div
+                                class="btn-container relative group inline-flex items-center w-max-w"
+                                x-data="{ hover: false }"
+                                x-on:mouseenter="hover = true"
+                                x-on:mouseleave="hover = false"
+                            >
+                                <svg width="0" height="0" color-interpolation-filters="sRGB">
+                                    <defs>
+                                        <filter id="buttonFilter">
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                            <feColorMatrix
+                                                in="blur"
+                                                mode="matrix"
+                                                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                                result="buttonFilter"
+                                            ></feColorMatrix>
+                                            <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                            <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                                        </filter>
+                                    </defs>
+                                </svg>
+                                <a href="choisir.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                                    <p class="btn-text bg-midnight-green">Commencer mon voyage</p>
+                                    <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                                </a>
+                                <div class="btn-icon transition-transform js-button-arrow">
+                                    <div class="transition-transform transform js-button-arrow-icon-primary">
+                                        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                                stroke="#fffbfa"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="btn-container relative group inline-flex items-center w-max-w"
+                    x-data="{ hover: false }"
+                    x-on:mouseenter="hover = true"
+                    x-on:mouseleave="hover = false"
+                    id="view-itinerary"
+                >
+                    <svg width="0" height="0" color-interpolation-filters="sRGB">
+                        <defs>
+                            <filter id="buttonFilter">
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"></feGaussianBlur>
+                                <feColorMatrix
+                                    in="blur"
+                                    mode="matrix"
+                                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                    result="buttonFilter"
+                                ></feColorMatrix>
+                                <feComposite in="SourceGraphic" in2="buttonFilter" operator="atop"></feComposite>
+                                <feBlend in="SourceGraphic" in2="buttonFilter"></feBlend>
+                            </filter>
+                        </defs>
+                    </svg>
+                    <a href="itineraire.html" class="inline-flex" style="filter: url(#buttonFilter)">
+                        <p class="btn-text bg-midnight-green">Voir mon voyage</p>
+                        <div class="btn-icon-container bg-midnight-green transition-transform js-button-icon"></div>
+                    </a>
+                    <div class="btn-icon transition-transform js-button-arrow">
+                        <div class="transition-transform transform js-button-arrow-icon-primary">
+                            <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.83325 1.66675L6.16658 6.00008L1.83325 10.3334"
+                                    stroke="#fffbfa"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section class="destinations-section">
                 <div class="container">
                     <div class="filters" x-data="{ activeFilter: 'all' }">
-                        <h2>Filtrer par type</h2>
                         <div class="filter-buttons">
                             <button
                                 @click="activeFilter = 'all'; destinationChooser?.filterDestinations('all')"
                                 :class="{ active: activeFilter === 'all' }"
-                                class="btn-filter"
+                                class="btn btn-filter"
                             >
                                 Toutes
                             </button>
                             <button
-                                @click="activeFilter = 'beach'; destinationChooser?.filterDestinations('beach')"
-                                :class="{ active: activeFilter === 'beach' }"
-                                class="btn-filter"
+                                @click="activeFilter = 'historic'; destinationChooser?.filterDestinations('historic')"
+                                :class="{ active: activeFilter === 'historic' }"
+                                class="btn btn-filter"
                             >
-                                Plage
+                                Historique
                             </button>
                             <button
-                                @click="activeFilter = 'mountain'; destinationChooser?.filterDestinations('mountain')"
-                                :class="{ active: activeFilter === 'mountain' }"
-                                class="btn-filter"
+                                @click="activeFilter = 'nightlife'; destinationChooser?.filterDestinations('nightlife')"
+                                :class="{ active: activeFilter === 'nightlife' }"
+                                class="btn btn-filter"
                             >
-                                Montagne
+                                Vie nocturne
                             </button>
                             <button
-                                @click="activeFilter = 'culture'; destinationChooser?.filterDestinations('culture')"
-                                :class="{ active: activeFilter === 'culture' }"
-                                class="btn-filter"
+                                @click="activeFilter = 'riverside'; destinationChooser?.filterDestinations('riverside')"
+                                :class="{ active: activeFilter === 'riverside' }"
+                                class="btn btn-filter"
                             >
-                                Culture
+                                Bord de rivière
                             </button>
                         </div>
                     </div>
@@ -75,12 +187,26 @@
 
         <footer class="footer">
             <div class="container">
-                <p>&copy; 2024 PlanIt. Explorez le monde avec passion.</p>
+                <div class="title">
+                    <h2 class="h1 dark-green">Le monde à <span class="dark-gradient">porter de mains</span></h2>
+                    <p class="midnight-green h2 h2-alatsi">Un voyage de rêve en seulement quelques clics</p>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html" class="footer-link h2-35">Accueil</a></li>
+                        <li><a href="choisir.html" class="footer-link h2-35">Choisir un pays</a></li>
+                        <li><a href="itineraire.html" class="footer-link h2-35">Mon itinéraire</a></li>
+                    </ul>
+                </div>
             </div>
         </footer>
 
         <script src="assets/js/storage.js"></script>
+        <script src="assets/js/slider.js"></script>
         <script src="assets/js/data-manager.js"></script>
         <script src="assets/js/app.js"></script>
+        <script src="assets/js/stats-images.js"></script>
+        <script src="assets/js/components/btn.js"></script>
+        <script src="assets/js/components/createCarousel.js"></script>
     </body>
 </html>

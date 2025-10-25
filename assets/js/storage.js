@@ -41,6 +41,21 @@ class StorageManager {
         return this.saveItinerary(filtered);
     }
 
+    /**
+     * Ajoute plusieurs destinations à l'itinéraire, en évitant les doublons.
+     * @param {Array} destinations - Tableau d'objets destination
+     * @returns {number} Le nombre de destinations effectivement ajoutées
+     */
+    static addDestinations(destinations) {
+        let addedCount = 0;
+        destinations.forEach((dest) => {
+            if (this.addDestination(dest)) {
+                addedCount++;
+            }
+        });
+        return addedCount;
+    }
+
     static clearItinerary() {
         return this.saveItinerary([]);
     }

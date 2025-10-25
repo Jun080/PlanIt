@@ -36,3 +36,7 @@
 .w-max-w {
     max-width: max-content;
 }
+
+.hidden-x {
+    overflow-x: hidden;
+}

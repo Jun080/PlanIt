@@ -16,10 +16,9 @@ class CarouselCreator {
                 cities = itinerary.map((city) => {
                     const cityKey = city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-");
                     const tags = cityTags[cityKey] || {
-                        beach: false,
-                        mountain: false,
-                        vibe: null,
-                        neighbors: [],
+                        historic: false,
+                        nightlife: false,
+                        riverside: false,
                     };
                     return {
                         ...city,
@@ -49,28 +48,51 @@ class CarouselCreator {
             return `
                 <img src="${city.image}" alt="${city.name}" style="width: 384px; height: 100%; object-fit: cover; border-radius: 5px;">
                 <div class="text">
-                    <h3 class="h2 dark-green">${city.name}</h3>
+                    <h3 class="h2 dark-green h2-gordon">${city.name}</h3>
                     <p class="midnight-green">${city.country}</p>
                 </div>
             `;
-        } else {
-            const tags = [];
-            if (city.tags?.beach) tags.push("beach");
-            if (city.tags?.mountain) tags.push("mountain");
-            const tagsDisplay = tags.length > 0 ? tags.join(" / ") : "";
+        } else if (carouselId === "finalCarousel" && document.getElementById(carouselId)?.classList.contains("itinerary-page")) {
+            const tagIcons = [];
+            if (city.tags?.historic) tagIcons.push('<img src="assets/images/icons/icon-historic.svg" alt="Historique" class="tag-icon">');
+            if (city.tags?.nightlife) tagIcons.push('<img src="assets/images/icons/icon-nightlife.svg" alt="Vie nocturne" class="tag-icon">');
+            if (city.tags?.riverside) tagIcons.push('<img src="assets/images/icons/icon-riverside.svg" alt="Bord de rivière" class="tag-icon">');
+            const tagsDisplay = tagIcons.length > 0 ? tagIcons.join("") : "";
 
             return `
-                <div class="text">
-                    <div class="first-line" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="tags midnight-green ${tagsDisplay ? "glass-effect" : ""}">${tagsDisplay}</span>
-                        <button class="remove-btn" style="background: none; border: none; font-size: 18px; cursor: pointer;" data-city-id="${
-                            city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-")
-                        }">
+                <div class="destination-card">
+                    <div class="btn-destinations-container">
+                        <button class="remove-btn" data-city-id="${city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-")}">
                             <img src="assets/images/icon-delete.svg" alt="retirer">
                         </button>
                     </div>
-                    <h3 class="h2 dark-green" style="text-align: center; margin: 10px 0;">${city.name}</h3>
-                    <p class="midnight-green" style="text-align: center; margin: 0;">${city.country}</p>
+                    <div class="first-line">
+                        <span class="tags midnight-green ${tagsDisplay ? "glass-effect-max" : ""}">${tagsDisplay}</span>
+                    </div>
+                    <img src="${city.image}" alt="${city.name}" style="width: 384px; height: 250px; object-fit: cover; border-radius: 5px;">
+                    <div class="text">
+                        <h3 class="h2 dark-green">${city.name}</h3>
+                        <p class="midnight-green">${city.country}</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            const tagIcons = [];
+            if (city.tags?.historic) tagIcons.push('<img src="assets/images/icons/icon-historic.svg" alt="Historique" class="tag-icon">');
+            if (city.tags?.nightlife) tagIcons.push('<img src="assets/images/icons/icon-nightlife.svg" alt="Vie nocturne" class="tag-icon">');
+            if (city.tags?.riverside) tagIcons.push('<img src="assets/images/icons/icon-riverside.svg" alt="Bord de rivière" class="tag-icon">');
+            const tagsDisplay = tagIcons.length > 0 ? tagIcons.join("") : "";
+
+            return `
+                <div class="text">
+                    <div class="first-line">
+                        <span class="tags midnight-green ${tagsDisplay ? "glass-effect" : ""}">${tagsDisplay}</span>
+                        <button class="remove-btn" data-city-id="${city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-")}">
+                            <img src="assets/images/icon-delete.svg" alt="retirer">
+                        </button>
+                    </div>
+                    <h3 class="h2 dark-green" style="margin: 10px 0;">${city.name}</h3>
+                    <p class="midnight-green">${city.country}</p>
                 </div>
                 <div class="image-container">
                     <img src="${city.image}" alt="${city.name}">
@@ -107,9 +129,57 @@ class CarouselCreator {
 
         cities.forEach((city) => {
             const slide = document.createElement("div");
-            slide.className = "carousel-item";
-            slide.innerHTML = this.createSlideHTML(city, carouselId);
+            const isItineraryPage = carouselId === "finalCarousel" && document.getElementById(carouselId)?.classList.contains("itinairy-page");
+            if (isItineraryPage) {
+                slide.className = "carousel-item destination-card";
+                // Structure identique à la liste
+                slide.innerHTML = `
+                    <div class="btn-destinations-container">
+                        <button class="remove-btn" data-city-id="${city._tagKey || city.name.toLowerCase().replace(/\s+/g, "-")}">
+                            <img src="assets/images/icon-delete.svg" alt="retirer">
+                        </button>
+                    </div>
+                    <div class="first-line">
+                        <span class="tags midnight-green ${
+                            city.tags && (city.tags.historic || city.tags.nightlife || city.tags.riverside) ? "glass-effect-max" : ""
+                        }">
+                            ${city.tags?.historic ? '<img src="assets/images/icons/icon-historic.svg" alt="Historique" class="tag-icon">' : ""}
+                            ${city.tags?.nightlife ? '<img src="assets/images/icons/icon-nightlife.svg" alt="Vie nocturne" class="tag-icon">' : ""}
+                            ${city.tags?.riverside ? '<img src="assets/images/icons/icon-riverside.svg" alt="Bord de rivière" class="tag-icon">' : ""}
+                        </span>
+                    </div>
+                    <img src="${city.image}" alt="${city.name}" style="width: 384px; height: 250px; object-fit: cover; border-radius: 5px;">
+                    <div class="text">
+                        <h3 class="h2 dark-green">${city.name}</h3>
+                        <p class="midnight-green">${city.country}</p>
+                    </div>
+                `;
+            } else {
+                slide.className = "carousel-item";
+                slide.innerHTML = this.createSlideHTML(city, carouselId);
+            }
             carouselTrack.appendChild(slide);
+        });
+
+        carouselTrack.addEventListener("click", (e) => {
+            const addBtn = e.target.closest(".add-btn");
+            const removeBtn = e.target.closest(".remove-btn");
+            if (addBtn) {
+                const cityId = addBtn.getAttribute("data-city-id");
+                const city = cities.find((c) => c._tagKey === cityId || c.id === cityId);
+                if (city) {
+                    StorageManager.addDestination(city);
+                    window.dispatchEvent(new CustomEvent("itineraryUpdated"));
+                }
+            }
+            if (removeBtn) {
+                const cityId = removeBtn.getAttribute("data-city-id");
+                const city = cities.find((c) => c._tagKey === cityId || c.id === cityId);
+                if (city) {
+                    StorageManager.removeDestination(city.id, city.country);
+                    window.dispatchEvent(new CustomEvent("itineraryUpdated"));
+                }
+            }
         });
 
         return {
@@ -126,6 +196,20 @@ async function createCarousel(carouselId) {
     const creator = new CarouselCreator();
     const carouselData = await creator.createCarousel(carouselId);
 
+    const carousel = document.getElementById(carouselId);
+    const emptyState = document.getElementById("emptyState");
+
+    if (carouselId === "finalCarousel") {
+        const itinerary = StorageManager.getItinerary();
+        if (itinerary.length === 0) {
+            if (carousel) carousel.style.display = "none";
+            if (emptyState) emptyState.style.display = "block";
+        } else {
+            if (carousel) carousel.style.display = "block";
+            if (emptyState) emptyState.style.display = "none";
+        }
+    }
+
     if (carouselData && window.SliderManager) {
         new window.SliderManager(carouselData);
     }
@@ -136,6 +220,10 @@ async function createCarousel(carouselId) {
 document.addEventListener("DOMContentLoaded", async () => {
     await createCarousel("exempleCarousel");
     await createCarousel("finalCarousel");
+
+    window.addEventListener("itineraryUpdated", async () => {
+        await createCarousel("finalCarousel");
+    });
 });
 
 window.CarouselCreator = CarouselCreator;

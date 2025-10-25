@@ -44,18 +44,6 @@ class SliderManager {
 
         StorageManager.saveItinerary(updatedItinerary);
 
-        const slideElement = removeBtn.closest(".carousel-item");
-        if (slideElement) {
-            slideElement.remove();
-
-            const remainingSlides = this.track.querySelectorAll(".carousel-item");
-            if (this.currentIndex >= remainingSlides.length && this.currentIndex > 0) {
-                this.currentIndex = remainingSlides.length - 1;
-            }
-
-            this.updateSlider();
-        }
-
         window.dispatchEvent(new CustomEvent("itineraryUpdated", { detail: updatedItinerary }));
     }
 
@@ -74,13 +62,25 @@ class SliderManager {
 
     nextSlide() {
         const slides = this.track.querySelectorAll(".carousel-item");
-        this.currentIndex = (this.currentIndex + 1) % slides.length;
+        const isMobile = window.innerWidth <= 600;
+        const maxIndex = isMobile ? Math.max(0, slides.length - 1) : Math.max(0, slides.length - 3);
+        if (this.currentIndex < maxIndex) {
+            this.currentIndex++;
+        } else {
+            this.currentIndex = 0;
+        }
         this.updateSlider();
     }
 
     prevSlide() {
         const slides = this.track.querySelectorAll(".carousel-item");
-        this.currentIndex = (this.currentIndex - 1 + slides.length) % slides.length;
+        const isMobile = window.innerWidth <= 600;
+        const maxIndex = isMobile ? Math.max(0, slides.length - 1) : Math.max(0, slides.length - 3);
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+        } else {
+            this.currentIndex = maxIndex;
+        }
         this.updateSlider();
     }
 }
