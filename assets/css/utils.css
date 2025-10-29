@@ -37,6 +37,7 @@
     max-width: max-content;
 }
 
-.hidden-x {
+.hidden-x-y {
     overflow-x: hidden;
+    overflow-y: hidden;
 }
